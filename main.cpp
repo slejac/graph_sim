@@ -1,7 +1,11 @@
-#include <iostream>
+/**
+ * @file main.cpp
+ *
+ * @author Jack Sleeman
+ */
 
-int main()
-{
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
-}
+#include "pch.h"
+#include <wx/wx.h>
+#include "GraphSimApp.h"
+
+wxIMPLEMENT_APP(GraphSimApp);
