@@ -17,7 +17,7 @@ add_subdirectory(${APPLICATION_LIBRARY})
 include_directories(${APPLICATION_LIBRARY})
 
 # Define a variable containing a list of source files for the project
-set(SOURCE_FILES main.cpp GraphSimApp.cpp GraphSimApp.h pch.h GraphSimLib/pch.h GraphSimLib/Mainframe.cpp GraphSimLib/Mainframe.h GraphSimLib/GameView.cpp GraphSimLib/GameView.h)
+set(SOURCE_FILES main.cpp GraphSimApp.cpp GraphSimApp.h pch.h GraphSimLib/pch.h GraphSimLib/Mainframe.cpp GraphSimLib/Mainframe.h GraphSimLib/SimulatorView.cpp GraphSimLib/SimulatorView.h)
 
 add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE ${SOURCE_FILES})
 

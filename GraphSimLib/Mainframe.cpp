@@ -7,7 +7,7 @@
 #include "pch.h"
 #include "Mainframe.h"
 //#include "ids.h"
-#include "GameView.h"
+#include "SimulatorView.h"
 
 /**
  * Initialize the MainFrame window.
@@ -16,16 +16,16 @@
  */
 void Mainframe::Initialize()
 {
-    Create(nullptr, wxID_ANY, L"Graphing Simulator",wxDefaultPosition,  wxSize(332, 375 ));
+    Create(nullptr, wxID_ANY, L"Graphing SimulatorView",wxDefaultPosition,  wxSize(1000, 1000 ));
 
     // Create a sizer that will lay out child windows vertically
     // one above each other
-    /**auto sizer = new wxBoxSizer( wxVERTICAL );
+    auto sizer = new wxBoxSizer( wxVERTICAL );
 
-    auto gameView = new GameView();
-    gameView->Initialize(this);
+    auto view = new SimulatorView();
+    view->Initialize(this);
 
-    sizer->Add(gameView, 1, wxEXPAND | wxALL );
+    sizer->Add(view, 1, wxEXPAND | wxALL );
 
     // Set the sizer for this frame
     SetSizer( sizer );
@@ -41,8 +41,8 @@ void Mainframe::Initialize()
     // Append menu bar item
     menuBar->Append(menu, L"&Menu");
 
-    menu->Append(IDM_GENERATE, L"&Generate Game",
-            "Generate a New Minesweeper Game");
+    //menu->Append(IDM_GENERATE, L"&Generate Game",
+            "Generate a New Minesweeper Game";
 
-    SetMenuBar( menuBar );*/
+    SetMenuBar( menuBar );
 }
