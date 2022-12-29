@@ -11,8 +11,8 @@
 
 class Simulator {
 private:
-    // All of the items to include in our game
-    // std::vector<std::shared_ptr<Item>> mItems;
+    /// All of the items to include in the simulator
+    //std::vector<std::shared_ptr<Item>> mItems;
 
 public:
     Simulator();
