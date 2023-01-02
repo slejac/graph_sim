@@ -16,4 +16,7 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/xml/xml.h>
+#include <wx/graphics.h>
+
 #endif //GRAPHSIM_PCH_H

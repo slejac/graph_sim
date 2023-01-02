@@ -1,6 +1,6 @@
 project(GraphSimLib)
 
-set(SOURCE_FILES Mainframe.cpp Mainframe.h Simulator.cpp Simulator.h)
+set(SOURCE_FILES Mainframe.cpp Mainframe.h Simulator.cpp Simulator.h ids.h)
 
 set(wxBUILD_PRECOMP OFF)
 find_package(wxWidgets COMPONENTS core base xrc html xml REQUIRED)
