@@ -19,5 +19,23 @@ void SimulatorView::Initialize(wxFrame* parent)
     Create(parent, wxID_ANY);
     SetBackgroundStyle(wxBG_STYLE_PAINT);
 
+    Bind(wxEVT_PAINT, &SimulatorView::OnPaint, this);
+
     mSimulation.Load("data/graph1.xml");
+
+    Refresh();
+}
+
+/**
+ * Draw the graph simulator.
+ *
+ * @param event
+ */
+void SimulatorView::OnPaint(wxPaintEvent& event)
+{
+    wxAutoBufferedPaintDC dc(this);
+    wxBrush background(*wxWHITE);
+    dc.SetBackground(background);
+    dc.Clear();
+    mSimulation.OnDraw(&dc);
 }

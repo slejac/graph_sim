@@ -17,6 +17,8 @@ private:
     /// The simulation object used
     Simulator mSimulation;
 
+    void OnPaint(wxPaintEvent& event);
+
 public:
     void Initialize(wxFrame* parent);
 };

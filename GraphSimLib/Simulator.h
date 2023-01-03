@@ -10,20 +10,27 @@
 #define GRAPHSIM_SIMULATOR_H
 
 #include <wx/xml/xml.h>
+#include "Vertex.h"
+#include "Edge.h"
 
 class Simulator {
 private:
     /// All of the vertices to include in the simulator
-    //std::vector<std::shared_ptr<Item>> mVertices;
+    std::vector<std::shared_ptr<Vertex>> mVertices;
 
     /// All of the edges to include in the simulator
-    //std::vector<std::shared_ptr<Item>> mVertices;
+    std::vector<std::shared_ptr<Edge>> mEdges;
+
+    /// Radius of the vertices
+    double mRadii = 50;
 
     void XmlVertex(wxXmlNode *node);
     void XmlEdge(wxXmlNode *node);
+
 public:
     Simulator();
 
+    void OnDraw(wxDC *dc);
     void Clear();
     void Load(const wxString &filename);
 };
