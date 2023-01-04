@@ -21,6 +21,9 @@ private:
     /// All of the edges to include in the simulator
     std::vector<std::shared_ptr<Edge>> mEdges;
 
+    /// Adjacency list representing graph
+    std::vector<std::vector<double>> mAdjacencyList;
+
     /// Radius of the vertices
     double mRadii = 35;
 
@@ -36,6 +39,7 @@ public:
     void OnDraw(wxDC *dc);
     void Clear();
     void Load(const wxString &filename);
+    std::vector<double> BFS();
 };
 
 #endif //GRAPHSIM_SIMULATOR_H

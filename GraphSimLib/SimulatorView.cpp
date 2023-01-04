@@ -27,6 +27,8 @@ void SimulatorView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnGraphFour, this, IDM_SIM4);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnGraphFive, this, IDM_SIM5);
 
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnBFS, this, IDM_BFS);
+
     Refresh();
 }
 
@@ -52,7 +54,8 @@ void SimulatorView::OnPaint(wxPaintEvent& event)
 void SimulatorView::OnGraphOne(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph1.xml");
+    mGraph = GraphOne;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -64,7 +67,8 @@ void SimulatorView::OnGraphOne(wxCommandEvent& event)
 void SimulatorView::OnGraphTwo(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph2.xml");
+    mGraph = GraphTwo;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -76,7 +80,8 @@ void SimulatorView::OnGraphTwo(wxCommandEvent& event)
 void SimulatorView::OnGraphThree(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph3.xml");
+    mGraph = GraphThree;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -88,7 +93,8 @@ void SimulatorView::OnGraphThree(wxCommandEvent& event)
 void SimulatorView::OnGraphFour(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph4.xml");
+    mGraph = GraphFour;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -100,6 +106,22 @@ void SimulatorView::OnGraphFour(wxCommandEvent& event)
 void SimulatorView::OnGraphFive(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph5.xml");
+    mGraph = GraphFive;
+    mSimulation.Load(mGraph);
+    Refresh();
+}
+
+/**
+ * BFS Simulation
+ *
+ * @param event
+ */
+void SimulatorView::OnBFS(wxCommandEvent& event)
+{
+    if (!mGraph.empty())
+    {
+        std::vector<double> res;
+        res = mSimulation.BFS();
+    }
     Refresh();
 }

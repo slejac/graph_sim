@@ -92,6 +92,9 @@ void Simulator::XmlVertex(wxXmlNode* node)
     std::shared_ptr<Vertex> vert = std::make_shared<Vertex>(id);
     vert->SetLocation(x, y);
     mVertices.push_back(vert);
+
+    std::vector<double> temp;
+    mAdjacencyList.push_back(temp);
 }
 
 /**
@@ -118,4 +121,40 @@ void Simulator::XmlEdge(wxXmlNode* node)
     e->SetStartVertex(startX, startY);
     e->SetEndVertex(endX, endY);
     mEdges.push_back(e);
+
+    // Populate Adjacency List
+    mAdjacencyList[start - 1].push_back(end);
+    // mAdjacencyList[end - 1].push_back(start);
+}
+
+/**
+ * Breadth-First Search
+ *
+ * @return BFS Results
+ */
+std::vector<double> Simulator::BFS()
+{
+    std::vector<double> res;
+    std::vector<int> visited(mVertices.size(), 0);
+    std::vector<double> queue;
+
+    queue.push_back(1);
+    while (!queue.empty())
+    {
+        double cur = queue.back();
+        queue.pop_back();
+        visited[cur - 1] = 1;
+        res.push_back(cur);
+
+        for (double neighbor : mAdjacencyList[cur - 1])
+        {
+            if (visited[neighbor - 1] == 0)
+            {
+                // Prepend
+                queue.insert(queue.begin(), neighbor);
+            }
+        }
+    }
+
+    return res;
 }
