@@ -7,6 +7,7 @@
 #include "pch.h"
 #include "Mainframe.h"
 #include "SimulatorView.h"
+#include "ids.h"
 
 /**
  * Initialize the MainFrame window.
@@ -32,17 +33,26 @@ void Mainframe::Initialize()
     // Layout (place) the child windows.
     Layout();
 
-    auto menuBar = new wxMenuBar( );
+    auto graphBar = new wxMenuBar( );
 
     // Add menu selection item
-    auto menu = new wxMenu();
+    auto graph = new wxMenu();
+    auto alg = new wxMenu();
 
     // Append menu bar item
-    menuBar->Append(menu, L"&Menu");
+    graphBar->Append(graph, L"&Graph");
+    graphBar->Append(alg, L"&Algorithm");
 
-    // Commented out method required to regenerate graph
-    // menu->Append(IDM_GENERATE, L"&Generate Graph",
-            "Generate a Graph One!";
+    graph->Append(IDM_SIM1, L"&Graph 1",
+            "Generate Graph One");
+    graph->Append(IDM_SIM2, L"&Graph 2",
+            "Generate Graph Two");
+    graph->Append(IDM_SIM3, L"&Graph 3",
+            "Generate Graph Three");
+    graph->Append(IDM_SIM4, L"&Graph 4",
+            "Generate Graph Four");
+    graph->Append(IDM_SIM5, L"&Graph 5",
+            "Generate Graph Five");
 
-    SetMenuBar( menuBar );
+    SetMenuBar( graphBar );
 }

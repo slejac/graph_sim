@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph width="1024" height="1024" directed="0" weighted="0" radii="25">
+    <vertices>
+        <vertex id="1" x="100" y="300"/>
+    </vertices>
+    <edges>
+    </edges>
+</graph>

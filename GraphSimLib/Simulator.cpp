@@ -33,7 +33,8 @@ void Simulator::OnDraw(wxDC* dc)
  */
 void Simulator::Clear()
 {
-    // Populate once multiple graphs have been added
+    mVertices.clear();
+    mEdges.clear();
 }
 
 /**

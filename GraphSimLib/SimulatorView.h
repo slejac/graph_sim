@@ -19,6 +19,11 @@ private:
 
     void OnPaint(wxPaintEvent& event);
 
+    void OnGraphOne(wxCommandEvent& event);
+    void OnGraphTwo(wxCommandEvent& event);
+    void OnGraphThree(wxCommandEvent& event);
+    void OnGraphFour(wxCommandEvent& event);
+    void OnGraphFive(wxCommandEvent& event);
 public:
     void Initialize(wxFrame* parent);
 };
