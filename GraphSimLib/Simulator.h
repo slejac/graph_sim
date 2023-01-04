@@ -22,13 +22,16 @@ private:
     std::vector<std::shared_ptr<Edge>> mEdges;
 
     /// Radius of the vertices
-    double mRadii = 50;
+    double mRadii = 35;
 
     void XmlVertex(wxXmlNode *node);
     void XmlEdge(wxXmlNode *node);
 
 public:
-    Simulator();
+    /**
+     * Constructor
+     */
+    Simulator() {}
 
     void OnDraw(wxDC *dc);
     void Clear();

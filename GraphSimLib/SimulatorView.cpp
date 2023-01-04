@@ -7,7 +7,6 @@
 #include "pch.h"
 #include <wx/dcbuffer.h>
 #include "SimulatorView.h"
-#include "ids.h"
 
 /**
  * Initializes SimulatorView class.
@@ -20,9 +19,7 @@ void SimulatorView::Initialize(wxFrame* parent)
     SetBackgroundStyle(wxBG_STYLE_PAINT);
 
     Bind(wxEVT_PAINT, &SimulatorView::OnPaint, this);
-
     mSimulation.Load("data/graph1.xml");
-
     Refresh();
 }
 

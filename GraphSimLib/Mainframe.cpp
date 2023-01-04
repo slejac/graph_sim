@@ -6,7 +6,6 @@
 
 #include "pch.h"
 #include "Mainframe.h"
-//#include "ids.h"
 #include "SimulatorView.h"
 
 /**
@@ -41,8 +40,9 @@ void Mainframe::Initialize()
     // Append menu bar item
     menuBar->Append(menu, L"&Menu");
 
-    //menu->Append(IDM_GENERATE, L"&Generate Game",
-            "Generate a New Minesweeper Game";
+    // Commented out method required to regenerate graph
+    // menu->Append(IDM_GENERATE, L"&Generate Graph",
+            "Generate a Graph One!";
 
     SetMenuBar( menuBar );
 }

@@ -23,5 +23,8 @@ void Vertex::Draw(wxDC* dc, double radius)
             wxFONTWEIGHT_NORMAL);
     dc->SetTextForeground(wxColour(0, 64, 0));
     dc->SetFont(font);
+
+    // Arbitrary Offset Values, equation likely can be devised to
+    // improve manner of offsetting
     dc->DrawText(mID, mX - (25/2 - 3), mY - (25/2 + 5));
 }

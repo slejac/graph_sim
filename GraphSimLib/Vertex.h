@@ -47,6 +47,20 @@ public:
      * @param y
      */
     void SetLocation(double x, double y) { mX = x, mY = y; }
+
+    /**
+     * Getter for vertex x coordinate
+     *
+     * @return
+     */
+    double GetX() const { return mX; }
+
+    /**
+     * Getter for vertex y coordinate
+     *
+     * @return
+     */
+     double GetY() const { return mY; }
 };
 
 #endif //GRAPHSIM_VERTEX_H

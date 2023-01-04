@@ -10,11 +10,22 @@
 #include "Edge.h"
 
 /**
- * Constructor for the simulator
+ * Draw the graph
+ *
+ * @param dc The context we are drawing on.
  */
-Simulator::Simulator()
+void Simulator::OnDraw(wxDC* dc)
 {
+    // Start with edges to avoid overlap
+    for (auto e: mEdges)
+    {
+        e->Draw(dc);
+    }
 
+    for (auto v : mVertices)
+    {
+        v->Draw(dc, mRadii);
+    }
 }
 
 /**
@@ -22,7 +33,7 @@ Simulator::Simulator()
  */
 void Simulator::Clear()
 {
-
+    // Populate once multiple graphs have been added
 }
 
 /**
@@ -55,6 +66,7 @@ void Simulator::Load(const wxString& filename)
     {
         XmlVertex(child);
     }
+
     subroot = subroot->GetNext();
     child = subroot->GetChildren();
     for( ; child; child=child->GetNext())
@@ -75,6 +87,7 @@ void Simulator::XmlVertex(wxXmlNode* node)
     node->GetAttribute(L"x").ToDouble(&x);
     double y;
     node->GetAttribute(L"y").ToDouble(&y);
+
     std::shared_ptr<Vertex> vert = std::make_shared<Vertex>(id);
     vert->SetLocation(x, y);
     mVertices.push_back(vert);
@@ -87,18 +100,21 @@ void Simulator::XmlVertex(wxXmlNode* node)
  */
 void Simulator::XmlEdge(wxXmlNode* node)
 {
+    double start;
+    node->GetAttribute(L"start").ToDouble(&start);
+    double end;
+    node->GetAttribute(L"end").ToDouble(&end);
+    double startX, startY, endX, endY;
 
-}
+    // Indexing system depends on vertex ordering
+    startX = mVertices[start - 1]->GetX();
+    startY = mVertices[start - 1]->GetY();
 
-/**
- * Draw the graph
- *
- * @param dc The context we are drawing on.
- */
-void Simulator::OnDraw(wxDC* dc)
-{
-    for (auto v : mVertices)
-    {
-        v->Draw(dc, mRadii);
-    }
+    endX = mVertices[end - 1]->GetX();
+    endY = mVertices[end - 1]->GetY();
+
+    std::shared_ptr<Edge> e = std::make_shared<Edge>();
+    e->SetStartVertex(startX, startY);
+    e->SetEndVertex(endX, endY);
+    mEdges.push_back(e);
 }
