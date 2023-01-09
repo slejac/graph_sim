@@ -16,7 +16,8 @@ enum IDs {
     IDM_SIM2,
     IDM_SIM3,
     IDM_SIM4,
-    IDM_SIM5
+    IDM_SIM5,
+    IDM_BFS
 };
 
 #endif //PROJECT1_IDS_H

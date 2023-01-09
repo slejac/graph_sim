@@ -5,8 +5,14 @@
  */
 
 #include "pch.h"
-#include <wx/dcbuffer.h>
 #include "SimulatorView.h"
+
+// Via https://www.geeksforgeeks.org/sleep-function-in-cpp/
+#include <chrono>
+#include <thread>
+
+#include <wx/dcbuffer.h>
+
 #include "ids.h"
 
 /**
@@ -26,6 +32,8 @@ void SimulatorView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnGraphThree, this, IDM_SIM3);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnGraphFour, this, IDM_SIM4);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnGraphFive, this, IDM_SIM5);
+
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnBFS, this, IDM_BFS);
 
     Refresh();
 }
@@ -52,7 +60,8 @@ void SimulatorView::OnPaint(wxPaintEvent& event)
 void SimulatorView::OnGraphOne(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph1.xml");
+    mGraph = GraphOne;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -64,7 +73,8 @@ void SimulatorView::OnGraphOne(wxCommandEvent& event)
 void SimulatorView::OnGraphTwo(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph2.xml");
+    mGraph = GraphTwo;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -76,7 +86,8 @@ void SimulatorView::OnGraphTwo(wxCommandEvent& event)
 void SimulatorView::OnGraphThree(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph3.xml");
+    mGraph = GraphThree;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -88,7 +99,8 @@ void SimulatorView::OnGraphThree(wxCommandEvent& event)
 void SimulatorView::OnGraphFour(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph4.xml");
+    mGraph = GraphFour;
+    mSimulation.Load(mGraph);
     Refresh();
 }
 
@@ -100,6 +112,58 @@ void SimulatorView::OnGraphFour(wxCommandEvent& event)
 void SimulatorView::OnGraphFive(wxCommandEvent& event)
 {
     mSimulation.Clear();
-    mSimulation.Load("data/graph5.xml");
+    mGraph = GraphFive;
+    mSimulation.Load(mGraph);
     Refresh();
+}
+
+/**
+ * BFS Simulation
+ *
+ * @param event
+ */
+void SimulatorView::OnBFS(wxCommandEvent& event)
+{
+    if (!mGraph.empty())
+    {
+        auto res = mSimulation.BFS();
+        auto adjacency = mSimulation.GetAdjacencyList();
+        std::vector<std::tuple<double, double>> edges;
+        for (auto vertex : res)
+        {
+            // Print node and neighbors
+            mSimulation.HighlightVertex(vertex);
+            for (auto neighbor : adjacency[vertex - 1])
+            {
+                edges.emplace_back(vertex, neighbor);
+            }
+            for (auto link : edges)
+            {
+                mSimulation.HighlightEdge(std::get<0>(link), std::get<1>(link));
+            }
+            Refresh();
+            Update();
+
+            // Drawing out neighbors in order
+            for (int i = 0; i < edges.size(); i++)
+            {
+                mSimulation.HighlightVertex(std::get<1>(edges[i]));
+                for (int j = i; j < edges.size(); j++)
+                {
+                    mSimulation.HighlightEdge(std::get<0>(edges[j]), std::get<1>(edges[j]));
+                }
+                Refresh();
+                Update();
+            }
+            mSimulation.CompletedVertex(vertex);
+            edges.clear();
+        }
+    }
+    Refresh();
+    Update();
+
+    // Thread delayed for 5 seconds
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    mSimulation.Clear();
+    mSimulation.Load(mGraph);
 }

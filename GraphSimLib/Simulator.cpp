@@ -6,6 +6,11 @@
 
 #include "pch.h"
 #include "Simulator.h"
+
+// Via https://www.geeksforgeeks.org/sleep-function-in-cpp/
+#include <chrono>
+#include <thread>
+
 #include "Vertex.h"
 #include "Edge.h"
 
@@ -26,6 +31,40 @@ void Simulator::OnDraw(wxDC* dc)
     {
         v->Draw(dc, mRadii);
     }
+
+    // Draw Highlighted Edges and Vertices Over
+    for (auto e2 : mHighlightedEdges)
+    {
+        e2->Highlight(dc);
+    }
+
+    for (auto v2 : mHighlightedVertices)
+    {
+        v2->Highlight(dc, mRadii);
+    }
+
+    for (auto v3 : mCompletedVertices)
+    {
+        v3->Completed(dc, mRadii);
+    }
+
+    // Draw Text
+    wxFont font(75,
+            wxFONTFAMILY_SWISS,
+            wxFONTSTYLE_NORMAL,
+            wxFONTWEIGHT_NORMAL);
+    dc->SetTextForeground(wxColour(64, 64, 64));
+    dc->SetFont(font);
+
+    // Arbitrary Offset Values, equation likely can be devised to
+    // improve manner of offsetting
+    dc->DrawText(mMessage, 300, 750);
+
+    mHighlightedEdges.clear();
+    mHighlightedVertices.clear();
+
+    // Thread delayed for 1 second
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 }
 
 /**
@@ -35,6 +74,9 @@ void Simulator::Clear()
 {
     mVertices.clear();
     mEdges.clear();
+    mAdjacencyList.clear();
+    mMessage.clear();
+    mCompletedVertices.clear();
 }
 
 /**
@@ -92,6 +134,9 @@ void Simulator::XmlVertex(wxXmlNode* node)
     std::shared_ptr<Vertex> vert = std::make_shared<Vertex>(id);
     vert->SetLocation(x, y);
     mVertices.push_back(vert);
+
+    std::vector<double> temp;
+    mAdjacencyList.push_back(temp);
 }
 
 /**
@@ -118,4 +163,69 @@ void Simulator::XmlEdge(wxXmlNode* node)
     e->SetStartVertex(startX, startY);
     e->SetEndVertex(endX, endY);
     mEdges.push_back(e);
+
+    // Populate Adjacency List
+    mAdjacencyList[start - 1].push_back(end);
+    // mAdjacencyList[end - 1].push_back(start);
+}
+
+/**
+ * Breadth-First Search
+ *
+ * @return BFS Results
+ */
+std::vector<double> Simulator::BFS()
+{
+    std::vector<double> res;
+    std::vector<int> visited(mVertices.size(), 0);
+    std::vector<double> queue;
+
+    queue.push_back(1);
+    while (!queue.empty())
+    {
+        double cur = queue.back();
+        queue.pop_back();
+        visited[cur - 1] = 1;
+        res.push_back(cur);
+
+        for (double neighbor : mAdjacencyList[cur - 1])
+        {
+            if (visited[neighbor - 1] == 0)
+            {
+                // Prepend
+                queue.insert(queue.begin(), neighbor);
+            }
+        }
+    }
+
+    // Add to Message Text
+    for (auto val : res)
+    {
+        mMessage.append(std::to_string(int(val)));
+        mMessage.append(" ");
+    }
+
+    return res;
+}
+
+/**
+ * Highlights an Edge
+ *
+ * @param start
+ *
+ * @param end
+ */
+void Simulator::HighlightEdge(double start, double end)
+{
+    for (auto edge : mEdges)
+    {
+        if (edge->GetStartX() == mVertices[start - 1]->GetX() &&
+                edge->GetStartY() == mVertices[start - 1]->GetY() &&
+                edge->GetEndX() == mVertices[end - 1]->GetX() &&
+                edge->GetEndY() == mVertices[end - 1]->GetY())
+        {
+            mHighlightedEdges.push_back(edge);
+            break;
+        }
+    }
 }
