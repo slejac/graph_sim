@@ -34,6 +34,7 @@ public:
     void operator=(const Edge &) = delete;
 
     void Draw(wxDC* dc);
+    void Highlight(wxDC* dc);
 
     /**
      * Set Starting Vertex
@@ -45,6 +46,20 @@ public:
     void SetStartVertex(double x, double y) { mStartX = x, mStartY = y; }
 
     /**
+     * Get the Starting Vertex X Coordinate
+     *
+     * @return
+     */
+    double GetStartX() { return mStartX; }
+
+    /**
+     * Get the Starting Vertex Y Coordinate
+     *
+     * @return
+     */
+    double GetStartY() { return mStartY; }
+
+    /**
      * Set Ending Vertex
      *
      * @param x
@@ -52,6 +67,20 @@ public:
      * @param y
      */
     void SetEndVertex(double x, double y) { mEndX = x, mEndY = y; }
+
+    /**
+     * Get the Ending Vertex X Coordinate
+     *
+     * @return
+     */
+    double GetEndX() { return mEndX; }
+
+    /**
+     * Get the Ending Vertex Y Coordinate
+     *
+     * @return
+     */
+    double GetEndY() { return mEndY; }
 };
 
 #endif //GRAPHSIM_EDGE_H

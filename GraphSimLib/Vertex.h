@@ -38,6 +38,8 @@ public:
     Vertex(const wxString &id) { mID = id; }
 
     void Draw(wxDC* dc, double radius);
+    void Highlight(wxDC* dc, double radius);
+    void Completed(wxDC* dc, double radius);
 
     /**
      * Setter for the vertex location
