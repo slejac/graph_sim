@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<graph width="1024" height="1024" directed="0" weighted="0" radii="100">
+<graph width="1024" height="1024" directed="0" weighted="0" radii="75">
     <vertices>
         <vertex id="1" x="100" y="300"/>
+        <vertex id="2" x="400" y="100"/>
+        <vertex id="3" x="700" y="300"/>
+        <vertex id="4" x="400" y="500"/>
     </vertices>
     <edges>
+        <edge start="1" end="2"/>
+        <edge start="1" end="4"/>
+        <edge start="2" end="3"/>
+        <edge start="3" end="4"/>
     </edges>
 </graph>

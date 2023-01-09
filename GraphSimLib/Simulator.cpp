@@ -166,7 +166,7 @@ void Simulator::XmlEdge(wxXmlNode* node)
 
     // Populate Adjacency List
     mAdjacencyList[start - 1].push_back(end);
-    // mAdjacencyList[end - 1].push_back(start);
+    mAdjacencyList[end - 1].push_back(start);
 }
 
 /**
@@ -185,15 +185,17 @@ std::vector<double> Simulator::BFS()
     {
         double cur = queue.back();
         queue.pop_back();
-        visited[cur - 1] = 1;
-        res.push_back(cur);
-
-        for (double neighbor : mAdjacencyList[cur - 1])
+        if (visited[cur - 1] == 0)
         {
-            if (visited[neighbor - 1] == 0)
+            visited[cur - 1] = 1;
+            res.push_back(cur);
+            for (double neighbor : mAdjacencyList[cur - 1])
             {
-                // Prepend
-                queue.insert(queue.begin(), neighbor);
+                if (visited[neighbor - 1] == 0)
+                {
+                    // Prepend
+                    queue.insert(queue.begin(), neighbor);
+                }
             }
         }
     }
@@ -219,10 +221,14 @@ void Simulator::HighlightEdge(double start, double end)
 {
     for (auto edge : mEdges)
     {
-        if (edge->GetStartX() == mVertices[start - 1]->GetX() &&
+        if ((edge->GetStartX() == mVertices[start - 1]->GetX() &&
                 edge->GetStartY() == mVertices[start - 1]->GetY() &&
                 edge->GetEndX() == mVertices[end - 1]->GetX() &&
-                edge->GetEndY() == mVertices[end - 1]->GetY())
+                edge->GetEndY() == mVertices[end - 1]->GetY()) ||
+                (edge->GetStartX() == mVertices[end - 1]->GetX() &&
+                    edge->GetStartY() == mVertices[end - 1]->GetY() &&
+                    edge->GetEndX() == mVertices[start - 1]->GetX() &&
+                    edge->GetEndY() == mVertices[start - 1]->GetY()))
         {
             mHighlightedEdges.push_back(edge);
             break;

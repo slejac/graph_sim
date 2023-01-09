@@ -128,14 +128,20 @@ void SimulatorView::OnBFS(wxCommandEvent& event)
     {
         auto res = mSimulation.BFS();
         auto adjacency = mSimulation.GetAdjacencyList();
+        std::vector<double> visited(adjacency.size(), 0);
         std::vector<std::tuple<double, double>> edges;
         for (auto vertex : res)
         {
+            visited[vertex - 1] = 1;
+
             // Print node and neighbors
             mSimulation.HighlightVertex(vertex);
             for (auto neighbor : adjacency[vertex - 1])
             {
-                edges.emplace_back(vertex, neighbor);
+                if (visited[neighbor - 1] == 0)
+                {
+                    edges.emplace_back(vertex, neighbor);
+                }
             }
             for (auto link : edges)
             {
