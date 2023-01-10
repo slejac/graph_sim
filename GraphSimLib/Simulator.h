@@ -41,6 +41,7 @@ private:
 
     void XmlVertex(wxXmlNode *node);
     void XmlEdge(wxXmlNode *node);
+    void DFSHelper(double cur, std::vector<double> *data, std::vector<double> *visited);
 
 public:
     /**
@@ -52,6 +53,7 @@ public:
     void Clear();
     void Load(const wxString &filename);
     std::vector<double> BFS();
+    std::vector<double> DFS();
     void HighlightEdge(double start, double end);
 
     /**

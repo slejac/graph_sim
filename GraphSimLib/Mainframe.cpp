@@ -55,6 +55,7 @@ void Mainframe::Initialize()
             "Generate Graph Five");
 
     alg->Append(IDM_BFS, L"&BFS", "Breadth-First Search");
+    alg->Append(IDM_DFS, L"&DFS", "Depth-First Search");
 
     SetMenuBar( graphBar );
 }

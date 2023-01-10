@@ -34,6 +34,7 @@ void SimulatorView::Initialize(wxFrame* parent)
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnGraphFive, this, IDM_SIM5);
 
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnBFS, this, IDM_BFS);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnDFS, this, IDM_DFS);
 
     Refresh();
 }
@@ -165,6 +166,27 @@ void SimulatorView::OnBFS(wxCommandEvent& event)
             edges.clear();
         }
     }
+    Refresh();
+    Update();
+
+    // Thread delayed for 5 seconds
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    mSimulation.Clear();
+    mSimulation.Load(mGraph);
+}
+
+/**
+ * DFS Simulation
+ *
+ * @param event
+ */
+void SimulatorView::OnDFS(wxCommandEvent& event)
+{
+    if (!mGraph.empty())
+    {
+        auto res = mSimulation.DFS();
+    }
+
     Refresh();
     Update();
 
