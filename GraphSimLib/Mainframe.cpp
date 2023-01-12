@@ -16,7 +16,7 @@
  */
 void Mainframe::Initialize()
 {
-    Create(nullptr, wxID_ANY, L"Graphing SimulatorView",wxDefaultPosition,  wxSize(1000, 1000 ));
+    Create(nullptr, wxID_ANY, L"Graphing Simulator",wxDefaultPosition,  wxSize(1000, 1000 ));
 
     // Create a sizer that will lay out child windows vertically
     // one above each other
@@ -55,6 +55,7 @@ void Mainframe::Initialize()
             "Generate Graph Five");
 
     alg->Append(IDM_BFS, L"&BFS", "Breadth-First Search");
+    alg->Append(IDM_DFS, L"&DFS", "Depth-First Search");
 
     SetMenuBar( graphBar );
 }

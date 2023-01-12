@@ -211,6 +211,53 @@ std::vector<double> Simulator::BFS()
 }
 
 /**
+ * Depth-First Search Helper
+ *
+ * @param cur Current Vertex
+ *
+ * @param data DFS Results returned by reference
+ *
+ * @param visited Vertices and their visitation status
+ */
+void Simulator::DFSHelper(double cur, std::vector<double> *data, std::vector<double> *visited)
+{
+    if ((*visited)[cur - 1] == 0)
+    {
+        (*visited)[cur - 1] = 1;
+        (*data).push_back(cur);
+        for (double neighbor : mAdjacencyList[cur - 1])
+        {
+            if ((*visited)[neighbor - 1] == 0)
+            {
+                DFSHelper(neighbor, data, visited);
+            }
+        }
+    }
+}
+
+/**
+ * Depth-First Search
+ *
+ * @return DFS Results
+ */
+std::vector<double> Simulator::DFS()
+{
+    std::vector<double> res;
+    std::vector<double> visited(mVertices.size(), 0);
+
+    DFSHelper(1, &res, &visited);
+
+    // Add to Message Text
+    for (auto val : res)
+    {
+        mMessage.append(std::to_string(int(val)));
+        mMessage.append(" ");
+    }
+
+    return res;
+}
+
+/**
  * Highlights an Edge
  *
  * @param start

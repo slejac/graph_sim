@@ -62,6 +62,9 @@ void Vertex::Highlight(wxDC* dc, double radius)
  */
 void Vertex::Completed(wxDC* dc, double radius)
 {
+    // This line prevents yellow borders being drawn around overlapping elements
+    dc->SetPen(wxPen(*wxBLACK, 5, wxSOLID));
+
     dc->SetBrush(*wxRED_BRUSH);
     dc->DrawCircle(mX, mY, radius);
 

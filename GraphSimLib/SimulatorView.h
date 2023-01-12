@@ -45,6 +45,7 @@ private:
     void OnGraphFive(wxCommandEvent& event);
 
     void OnBFS(wxCommandEvent& event);
+    void OnDFS(wxCommandEvent& event);
 public:
     void Initialize(wxFrame* parent);
 };
