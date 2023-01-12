@@ -162,8 +162,8 @@ void SimulatorView::OnBFS(wxCommandEvent& event)
                 Refresh();
                 Update();
             }
-            mSimulation.CompletedVertex(vertex);
             edges.clear();
+            mSimulation.CompletedVertex(vertex);
         }
     }
     Refresh();
@@ -185,6 +185,54 @@ void SimulatorView::OnDFS(wxCommandEvent& event)
     if (!mGraph.empty())
     {
         auto res = mSimulation.DFS();
+        auto adjacency = mSimulation.GetAdjacencyList();
+        std::vector<double> visited(adjacency.size(), 0);
+        std::vector<double> stack;
+
+        visited[0] = 1;
+        for (int i = 0; i < res.size(); i++)
+        {
+            mSimulation.HighlightVertex(res[i]);
+            Refresh();
+            Update();
+
+            mSimulation.CompletedVertex(res[i]);
+            Refresh();
+            Update();
+
+            if (i < (res.size() - 1))
+            {
+                int pop = true;
+                for (auto node : adjacency[res[i] - 1])
+                {
+                    if (node == res[i + 1])
+                    {
+                        mSimulation.HighlightEdge(res[i], res[i + 1]);
+                        visited[res[i + 1] - 1] = 1;
+                        pop = false;
+                        break;
+                    }
+                }
+
+                if (pop)
+                {
+                    mSimulation.HighlightEdge(stack.back(), res[i + 1]);
+                    stack.pop_back();
+                }
+            }
+
+            Refresh();
+            Update();
+
+            for (auto neighbor : adjacency[res[i] - 1])
+            {
+                if (visited[neighbor - 1] == 0)
+                {
+                    stack.push_back(res[i]);
+                    break;
+                }
+            }
+        }
     }
 
     Refresh();

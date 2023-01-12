@@ -16,7 +16,7 @@
  */
 void Mainframe::Initialize()
 {
-    Create(nullptr, wxID_ANY, L"Graphing SimulatorView",wxDefaultPosition,  wxSize(1000, 1000 ));
+    Create(nullptr, wxID_ANY, L"Graphing Simulator",wxDefaultPosition,  wxSize(1000, 1000 ));
 
     // Create a sizer that will lay out child windows vertically
     // one above each other
