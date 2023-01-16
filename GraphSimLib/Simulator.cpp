@@ -258,6 +258,49 @@ std::vector<double> Simulator::DFS()
 }
 
 /**
+ * Helper for Cycle Detector
+ */
+bool Simulator::CyclicHelper(double cur, std::vector<double> *visited, double parent)
+{
+    (*visited)[cur - 1] = 1;
+    for (auto neighbor : mAdjacencyList[cur - 1])
+    {
+        if ((*visited)[neighbor - 1] == 0)
+        {
+            if (CyclicHelper(neighbor, visited, cur))
+            {
+                return true;
+            }
+        }
+        else if (parent != neighbor)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Detect Cycle in the Graph
+ *
+ * @return Bool representing the presence of a Cycle
+ */
+bool Simulator::Cyclic()
+{
+    std::vector<double> visited(mVertices.size(), 0);
+    bool res = CyclicHelper(1, &visited, 0);
+    if (res)
+    {
+        mMessage = "Cyclic";
+    }
+    else
+    {
+        mMessage = "Acyclic";
+    }
+    return res;
+}
+
+/**
  * Highlights an Edge
  *
  * @param start

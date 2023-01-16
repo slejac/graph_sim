@@ -35,6 +35,7 @@ void SimulatorView::Initialize(wxFrame* parent)
 
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnBFS, this, IDM_BFS);
     parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnDFS, this, IDM_DFS);
+    parent->Bind(wxEVT_COMMAND_MENU_SELECTED, &SimulatorView::OnDetectCycle, this, IDM_CYC);
 
     Refresh();
 }
@@ -242,4 +243,18 @@ void SimulatorView::OnDFS(wxCommandEvent& event)
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     mSimulation.Clear();
     mSimulation.Load(mGraph);
+}
+
+/**
+ * Detect Cycle
+ *
+ * @param event
+ */
+void SimulatorView::OnDetectCycle(wxCommandEvent& event)
+{
+    auto res = mSimulation.Cyclic();
+    Refresh();
+    Update();
+
+    // Draw Remaining Data
 }

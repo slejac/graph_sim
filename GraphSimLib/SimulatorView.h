@@ -46,6 +46,7 @@ private:
 
     void OnBFS(wxCommandEvent& event);
     void OnDFS(wxCommandEvent& event);
+    void OnDetectCycle(wxCommandEvent& event);
 public:
     void Initialize(wxFrame* parent);
 };
