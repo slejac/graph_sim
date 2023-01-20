@@ -42,7 +42,7 @@ private:
     void XmlVertex(wxXmlNode *node);
     void XmlEdge(wxXmlNode *node);
     void DFSHelper(double cur, std::vector<double> *data, std::vector<double> *visited);
-    bool CyclicHelper(double cur, std::vector<double> *visited, double parent);
+    bool CyclicHelper(double cur, std::vector<double> *visited, std::vector<double> *path, double parent);
 
 public:
     /**
@@ -55,7 +55,7 @@ public:
     void Load(const wxString &filename);
     std::vector<double> BFS();
     std::vector<double> DFS();
-    bool Cyclic();
+    std::vector<double> Cyclic();
     void HighlightEdge(double start, double end);
 
     /**

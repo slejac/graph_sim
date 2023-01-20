@@ -259,21 +259,33 @@ std::vector<double> Simulator::DFS()
 
 /**
  * Helper for Cycle Detector
+ *
+ * @param cur Current Vertex
+ *
+ * @param visited Visited Vertices
+ *
+ * @param path Path we travel that is "Cyclic"
+ *
+ * @param parent Vertex we are coming from
+ *
+ * @return Whether or not the graph is cyclic
  */
-bool Simulator::CyclicHelper(double cur, std::vector<double> *visited, double parent)
+bool Simulator::CyclicHelper(double cur, std::vector<double> *visited, std::vector<double> *path, double parent)
 {
     (*visited)[cur - 1] = 1;
     for (auto neighbor : mAdjacencyList[cur - 1])
     {
         if ((*visited)[neighbor - 1] == 0)
         {
-            if (CyclicHelper(neighbor, visited, cur))
+            if (CyclicHelper(neighbor, visited, path, cur))
             {
+                path->push_back(neighbor);
                 return true;
             }
         }
         else if (parent != neighbor)
         {
+            path->push_back(neighbor);
             return true;
         }
     }
@@ -283,12 +295,13 @@ bool Simulator::CyclicHelper(double cur, std::vector<double> *visited, double pa
 /**
  * Detect Cycle in the Graph
  *
- * @return Bool representing the presence of a Cycle
+ * @return Path taken to detect cycle (none if acyclic)
  */
-bool Simulator::Cyclic()
+std::vector<double> Simulator::Cyclic()
 {
     std::vector<double> visited(mVertices.size(), 0);
-    bool res = CyclicHelper(1, &visited, 0);
+    std::vector<double> path;
+    bool res = CyclicHelper(1, &visited, &path, 0);
     if (res)
     {
         mMessage = "Cyclic";
@@ -296,8 +309,9 @@ bool Simulator::Cyclic()
     else
     {
         mMessage = "Acyclic";
+        path.clear();
     }
-    return res;
+    return path;
 }
 
 /**

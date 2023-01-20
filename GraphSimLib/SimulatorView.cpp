@@ -252,9 +252,39 @@ void SimulatorView::OnDFS(wxCommandEvent& event)
  */
 void SimulatorView::OnDetectCycle(wxCommandEvent& event)
 {
-    auto res = mSimulation.Cyclic();
-    Refresh();
-    Update();
+    if (!mGraph.empty())
+    {
+        auto res = mSimulation.Cyclic();
+        Refresh();
+        Update();
 
-    // Draw Remaining Data
+        // Draw Remaining Data
+        if (!res.empty())
+        {
+            for (int i = 0; i < res.size() - 1; i++)
+            {
+                mSimulation.HighlightVertex(res[i]);
+                mSimulation.HighlightEdge(res[i], res[i + 1]);
+
+                Refresh();
+                Update();
+
+                mSimulation.CompletedVertex(res[i]);
+            }
+
+            mSimulation.HighlightVertex(res[res.size() - 1]);
+            mSimulation.HighlightEdge(res[res.size() - 1], res[0]);
+            Refresh();
+            Update();
+
+            mSimulation.CompletedVertex(res[res.size() - 1]);
+            Refresh();
+            Update();
+        }
+    }
+
+    // Thread delayed for 5 seconds
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    mSimulation.Clear();
+    mSimulation.Load(mGraph);
 }
