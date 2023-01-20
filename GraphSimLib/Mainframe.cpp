@@ -56,6 +56,8 @@ void Mainframe::Initialize()
 
     alg->Append(IDM_BFS, L"&BFS", "Breadth-First Search");
     alg->Append(IDM_DFS, L"&DFS", "Depth-First Search");
+    alg->Append(IDM_CYC, L"&Detect Cycle", "Determine whether the"
+                                           "graph is cyclic or acyclic");
 
     SetMenuBar( graphBar );
 }
